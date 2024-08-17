@@ -71,20 +71,23 @@ export var Composer = /*#__PURE__*/React.forwardRef(function (props, ref) {
     _useState14 = _slicedToArray(_useState13, 2),
     isWide = _useState14[0],
     setWide = _useState14[1];
+  // @ts-ignore
   useEffect(function () {
-    var mq = wideBreakpoint && window.matchMedia ? window.matchMedia("(min-width: ".concat(wideBreakpoint, ")")) : false;
-    function handleMq(e) {
-      setWide(e.matches);
-    }
-    setWide(mq && mq.matches);
-    if (mq) {
-      mq.addListener(handleMq);
-    }
-    return function () {
+    if (typeof window !== 'undefined') {
+      var handleMq = function handleMq(e) {
+        setWide(e.matches);
+      };
+      var mq = wideBreakpoint && window.matchMedia ? window.matchMedia("(min-width: ".concat(wideBreakpoint, ")")) : false;
+      setWide(mq && mq.matches);
       if (mq) {
-        mq.removeListener(handleMq);
+        mq.addListener(handleMq);
       }
-    };
+      return function () {
+        if (mq) {
+          mq.removeListener(handleMq);
+        }
+      };
+    }
   }, [wideBreakpoint]);
   useEffect(function () {
     toggleClass('S--wide', isWide);

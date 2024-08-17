@@ -276,6 +276,7 @@ export var Carousel = /*#__PURE__*/React.forwardRef(function (props, ref) {
       wrapperRef: wrapperRef
     };
   }, [goTo, prev, next]);
+  // @ts-ignore
   useEffect(function () {
     // should use ResizeObserver
     function handleResize() {
@@ -285,10 +286,12 @@ export var Carousel = /*#__PURE__*/React.forwardRef(function (props, ref) {
     if (stateRef.current.first) {
       handleResize();
     }
-    window.addEventListener('resize', handleResize);
-    return function () {
-      window.removeEventListener('resize', handleResize);
-    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+      return function () {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, [activeIndex, slideTo]);
   useEffect(function () {
     if (onChange && !stateRef.current.first) {

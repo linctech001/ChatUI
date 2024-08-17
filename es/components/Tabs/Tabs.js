@@ -120,9 +120,11 @@ export var Tabs = /*#__PURE__*/React.forwardRef(function (props, ref) {
   useEffect(function () {
     var nav = navRef.current;
     var ro;
-    if (nav && 'ResizeObserver' in window) {
-      ro = new ResizeObserver(movePointer);
-      ro.observe(nav);
+    if (typeof window !== 'undefined') {
+      if (nav && 'ResizeObserver' in window) {
+        ro = new ResizeObserver(movePointer);
+        ro.observe(nav);
+      }
     }
     return function () {
       if (ro && nav) {

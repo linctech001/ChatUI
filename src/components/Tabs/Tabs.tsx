@@ -142,9 +142,11 @@ export const Tabs = React.forwardRef<HTMLDivElement, TabsProps>((props, ref) => 
     const nav = navRef.current;
     let ro: ResizeObserver;
 
-    if (nav && 'ResizeObserver' in window) {
-      ro = new ResizeObserver(movePointer);
-      ro.observe(nav);
+    if (typeof window !== 'undefined') {
+      if (nav && 'ResizeObserver' in window) {
+        ro = new ResizeObserver(movePointer);
+        ro.observe(nav);
+      }
     }
 
     return () => {

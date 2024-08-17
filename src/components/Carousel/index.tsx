@@ -363,7 +363,7 @@ export const Carousel = React.forwardRef<CarouselHandle, CarouselProps>((props, 
     }),
     [goTo, prev, next],
   );
-
+  // @ts-ignore
   useEffect(() => {
     // should use ResizeObserver
     function handleResize() {
@@ -374,11 +374,12 @@ export const Carousel = React.forwardRef<CarouselHandle, CarouselProps>((props, 
     if (stateRef.current.first) {
       handleResize();
     }
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('resize', handleResize);
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
   }, [activeIndex, slideTo]);
 
   useEffect(() => {

@@ -73,27 +73,29 @@ export const Composer = React.forwardRef<ComposerHandle, ComposerProps>((props, 
   const popoverTarget = useRef<any>();
   const isMountRef = useRef(false);
   const [isWide, setWide] = useState(false);
-
+  // @ts-ignore
   useEffect(() => {
-    const mq =
-      wideBreakpoint && window.matchMedia
-        ? window.matchMedia(`(min-width: ${wideBreakpoint})`)
-        : false;
+    if (typeof window !== 'undefined') {
+      const mq =
+        wideBreakpoint && window.matchMedia
+          ? window.matchMedia(`(min-width: ${wideBreakpoint})`)
+          : false;
 
-    function handleMq(e: MediaQueryListEvent) {
-      setWide(e.matches);
-    }
-
-    setWide(mq && mq.matches);
-
-    if (mq) {
-      mq.addListener(handleMq);
-    }
-    return () => {
-      if (mq) {
-        mq.removeListener(handleMq);
+      function handleMq(e: MediaQueryListEvent) {
+        setWide(e.matches);
       }
-    };
+
+      setWide(mq && mq.matches);
+
+      if (mq) {
+        mq.addListener(handleMq);
+      }
+      return () => {
+        if (mq) {
+          mq.removeListener(handleMq);
+        }
+      };
+    }
   }, [wideBreakpoint]);
 
   useEffect(() => {

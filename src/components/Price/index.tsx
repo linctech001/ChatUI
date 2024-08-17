@@ -11,7 +11,9 @@ export interface PriceProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const canFormat =
-  'Intl' in window && typeof Intl.NumberFormat.prototype.formatToParts === 'function';
+  typeof window !== 'undefined' &&
+  'Intl' in window &&
+  typeof Intl.NumberFormat.prototype.formatToParts === 'function';
 
 export const Price = React.forwardRef<HTMLDivElement, PriceProps>((props, ref) => {
   const { className, price, currency, locale, original, ...other } = props;

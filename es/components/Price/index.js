@@ -5,7 +5,7 @@ var _excluded = ["className", "price", "currency", "locale", "original"];
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 import clsx from 'clsx';
-var canFormat = 'Intl' in window && typeof Intl.NumberFormat.prototype.formatToParts === 'function';
+var canFormat = typeof window !== 'undefined' && 'Intl' in window && typeof Intl.NumberFormat.prototype.formatToParts === 'function';
 export var Price = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
     price = props.price,

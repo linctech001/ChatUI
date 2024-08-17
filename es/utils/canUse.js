@@ -9,17 +9,26 @@ var testCache = {
         }
       });
       // @ts-ignore
-      window.addEventListener('test', null, opts);
+      if (typeof window !== 'undefined') {
+        // @ts-ignore
+        window.addEventListener('test', null, opts);
+      }
     } catch (e) {
       // No support
     }
     return supportsPassive;
   },
+  // @ts-ignore
   smoothScroll: function smoothScroll() {
-    return 'scrollBehavior' in document.documentElement.style;
+    if (typeof document !== 'undefined') {
+      return 'scrollBehavior' in document.documentElement.style;
+    }
   },
+  // @ts-ignore
   touch: function touch() {
-    return 'ontouchstart' in window;
+    if (typeof window !== 'undefined') {
+      return 'ontouchstart' in window;
+    }
   }
 };
 export function addTest(name, test) {

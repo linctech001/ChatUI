@@ -1,1 +1,1 @@
-export default function countLines(el: Element): number;
+export default function countLines(el: Element): number | undefined;
