@@ -1,5 +1,5 @@
 import React from 'react';
-
+// @ts-ignore
 export interface BubbleProps extends React.HTMLAttributes<HTMLDivElement> {
   type?: string;
   content?: React.ReactNode;
