@@ -6,12 +6,10 @@ var testCache = {
         // eslint-disable-next-line
         get: function get() {
           supportsPassive = true;
-        },
+        }
       });
       // @ts-ignore
-      if (typeof window !== 'undefined') {
-        window.addEventListener('test', null, opts);
-      }
+      window.addEventListener('test', null, opts);
     } catch (e) {
       // No support
     }
@@ -21,10 +19,8 @@ var testCache = {
     return 'scrollBehavior' in document.documentElement.style;
   },
   touch: function touch() {
-    if (typeof window !== 'undefined') {
-      return 'ontouchstart' in window;
-    }
-  },
+    return 'ontouchstart' in window;
+  }
 };
 export function addTest(name, test) {
   // @ts-ignore

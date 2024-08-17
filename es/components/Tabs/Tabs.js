@@ -1,8 +1,8 @@
-import _slicedToArray from '@babel/runtime/helpers/esm/slicedToArray';
-import _extends from '@babel/runtime/helpers/esm/extends';
-import _objectWithoutProperties from '@babel/runtime/helpers/esm/objectWithoutProperties';
-var _excluded = ['active', 'index', 'children', 'onClick'],
-  _excluded2 = ['active', 'children'];
+import _slicedToArray from "@babel/runtime/helpers/esm/slicedToArray";
+import _extends from "@babel/runtime/helpers/esm/extends";
+import _objectWithoutProperties from "@babel/runtime/helpers/esm/objectWithoutProperties";
+var _excluded = ["active", "index", "children", "onClick"],
+  _excluded2 = ["active", "children"];
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import clsx from 'clsx';
 import smoothScroll from '../../utils/smoothScroll';
@@ -16,50 +16,31 @@ var TabItem = function TabItem(props) {
   function handleClick(e) {
     onClick(index, e);
   }
-  return /*#__PURE__*/ React.createElement(
-    'div',
-    {
-      className: 'Tabs-navItem',
-    },
-    /*#__PURE__*/ React.createElement(
-      'button',
-      _extends(
-        {
-          className: clsx('Tabs-navLink', {
-            active: active,
-          }),
-          type: 'button',
-          role: 'tab',
-          'aria-selected': active,
-          onClick: handleClick,
-        },
-        others,
-      ),
-      /*#__PURE__*/ React.createElement('span', null, children),
-    ),
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: "Tabs-navItem"
+  }, /*#__PURE__*/React.createElement("button", _extends({
+    className: clsx('Tabs-navLink', {
+      active: active
+    }),
+    type: "button",
+    role: "tab",
+    "aria-selected": active,
+    onClick: handleClick
+  }, others), /*#__PURE__*/React.createElement("span", null, children)));
 };
 var TabsPane = function TabsPane(props) {
   var active = props.active,
     children = props.children,
     others = _objectWithoutProperties(props, _excluded2);
-  return /*#__PURE__*/ React.createElement(
-    'div',
-    _extends(
-      {
-        className: clsx('Tabs-pane', {
-          active: active,
-        }),
-      },
-      others,
-      {
-        role: 'tabpanel',
-      },
-    ),
-    children,
-  );
+  return /*#__PURE__*/React.createElement("div", _extends({
+    className: clsx('Tabs-pane', {
+      active: active
+    })
+  }, others, {
+    role: "tabpanel"
+  }), children);
 };
-export var Tabs = /*#__PURE__*/ React.forwardRef(function (props, ref) {
+export var Tabs = /*#__PURE__*/React.forwardRef(function (props, ref) {
   var className = props.className,
     _props$index = props.index,
     oIndex = _props$index === void 0 ? 0 : _props$index,
@@ -89,129 +70,84 @@ export var Tabs = /*#__PURE__*/ React.forwardRef(function (props, ref) {
   React.Children.forEach(children, function (item, idx) {
     if (!item) return;
     var active = index === idx;
-    var id = ''.concat(tabPaneId, '-').concat(idx);
-    headers.push(
-      /*#__PURE__*/ React.createElement(
-        TabItem,
-        {
-          active: active,
-          index: idx,
-          key: id,
-          onClick: handleIndexChange,
-          'aria-controls': id,
-          tabIndex: active ? -1 : 0,
-        },
-        item.props.label,
-      ),
-    );
+    var id = "".concat(tabPaneId, "-").concat(idx);
+    headers.push( /*#__PURE__*/React.createElement(TabItem, {
+      active: active,
+      index: idx,
+      key: id,
+      onClick: handleIndexChange,
+      "aria-controls": id,
+      tabIndex: active ? -1 : 0
+    }, item.props.label));
     if (item.props.children) {
-      contents.push(
-        /*#__PURE__*/ React.createElement(
-          TabsPane,
-          {
-            active: active,
-            key: id,
-            id: id,
-          },
-          item.props.children,
-        ),
-      );
+      contents.push( /*#__PURE__*/React.createElement(TabsPane, {
+        active: active,
+        key: id,
+        id: id
+      }, item.props.children));
     }
   });
-  useEffect(
-    function () {
-      setIndex(oIndex);
-    },
-    [oIndex],
-  );
-  var movePointer = useCallback(
-    function () {
-      var nav = navRef.current;
-      if (!nav) return;
-      var currentNav = nav.children[indexRef.current];
-      if (!currentNav) return;
-      var text = currentNav.querySelector('span');
-      if (!text) return;
-      var _ref = currentNav,
-        navWidth = _ref.offsetWidth,
-        navOffsetLeft = _ref.offsetLeft;
-      var _text$getBoundingClie = text.getBoundingClientRect(),
-        textWidth = _text$getBoundingClie.width;
-      var pointerWidth = Math.max(textWidth - 16, 26);
-      // 中心位的偏移量
-      var offsetLeftOfCenter = navOffsetLeft + navWidth / 2;
-      setPointerStyles({
-        transform: 'translateX('.concat(offsetLeftOfCenter - pointerWidth / 2, 'px)'),
-        width: ''.concat(pointerWidth, 'px'),
+  useEffect(function () {
+    setIndex(oIndex);
+  }, [oIndex]);
+  var movePointer = useCallback(function () {
+    var nav = navRef.current;
+    if (!nav) return;
+    var currentNav = nav.children[indexRef.current];
+    if (!currentNav) return;
+    var text = currentNav.querySelector('span');
+    if (!text) return;
+    var _ref = currentNav,
+      navWidth = _ref.offsetWidth,
+      navOffsetLeft = _ref.offsetLeft;
+    var _text$getBoundingClie = text.getBoundingClientRect(),
+      textWidth = _text$getBoundingClie.width;
+    var pointerWidth = Math.max(textWidth - 16, 26);
+    // 中心位的偏移量
+    var offsetLeftOfCenter = navOffsetLeft + navWidth / 2;
+    setPointerStyles({
+      transform: "translateX(".concat(offsetLeftOfCenter - pointerWidth / 2, "px)"),
+      width: "".concat(pointerWidth, "px")
+    });
+    if (scrollable) {
+      smoothScroll({
+        el: nav,
+        to: offsetLeftOfCenter - nav.offsetWidth / 2,
+        x: true
       });
-      if (scrollable) {
-        smoothScroll({
-          el: nav,
-          to: offsetLeftOfCenter - nav.offsetWidth / 2,
-          x: true,
-        });
+    }
+  }, [scrollable]);
+  useEffect(function () {
+    var nav = navRef.current;
+    var ro;
+    if (nav && 'ResizeObserver' in window) {
+      ro = new ResizeObserver(movePointer);
+      ro.observe(nav);
+    }
+    return function () {
+      if (ro && nav) {
+        ro.unobserve(nav);
       }
-    },
-    [scrollable],
-  );
-  useEffect(
-    function () {
-      var nav = navRef.current;
-      var ro;
-      if (typeof window !== 'undefined') {
-        if (nav && 'ResizeObserver' in window) {
-          ro = new ResizeObserver(movePointer);
-          ro.observe(nav);
-        }
-      }
-      return function () {
-        if (ro && nav) {
-          ro.unobserve(nav);
-        }
-      };
-    },
-    [movePointer],
-  );
-  useEffect(
-    function () {
-      indexRef.current = index;
-      movePointer();
-    },
-    [index, movePointer],
-  );
+    };
+  }, [movePointer]);
+  useEffect(function () {
+    indexRef.current = index;
+    movePointer();
+  }, [index, movePointer]);
   var needNav = headers.length > (hideNavIfOnlyOne ? 1 : 0);
-  return /*#__PURE__*/ React.createElement(
-    'div',
-    {
-      className: clsx(
-        'Tabs',
-        {
-          'Tabs--scrollable': scrollable,
-        },
-        className,
-      ),
-      ref: ref,
-    },
-    needNav &&
-      /*#__PURE__*/ React.createElement(
-        'div',
-        {
-          className: 'Tabs-nav',
-          role: 'tablist',
-          ref: navRef,
-        },
-        headers,
-        /*#__PURE__*/ React.createElement('span', {
-          className: 'Tabs-navPointer',
-          style: pointerStyles,
-        }),
-      ),
-    /*#__PURE__*/ React.createElement(
-      'div',
-      {
-        className: 'Tabs-content',
-      },
-      contents,
-    ),
-  );
+  return /*#__PURE__*/React.createElement("div", {
+    className: clsx('Tabs', {
+      'Tabs--scrollable': scrollable
+    }, className),
+    ref: ref
+  }, needNav && /*#__PURE__*/React.createElement("div", {
+    className: "Tabs-nav",
+    role: "tablist",
+    ref: navRef
+  }, headers, /*#__PURE__*/React.createElement("span", {
+    className: "Tabs-navPointer",
+    style: pointerStyles
+  })), /*#__PURE__*/React.createElement("div", {
+    className: "Tabs-content"
+  }, contents));
 });
